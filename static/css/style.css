@@ -8,6 +8,15 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+  /* https://fonts.google.com/specimen/Roboto+Slab/about */
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/robotoslab/v24/BngbUXZYTXPIvIBgJJSb6s3BzlRRfKOFbvjojISmb2Rj.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 html {
   font-family: 'Open Sans', sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -15,11 +24,12 @@ html {
 }
 
 body {
-  margin: 0
-  font-size: 14px;
+  margin: 0;
+  font-size: 12px;
   line-height: 1.42857143;
   color: #333;
-  background-color: #fff
+  background-image: url("../images/tile.png");
+  background-repeat: repeat;
 }
 
 article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary {
@@ -424,11 +434,13 @@ h2 {
 
 .h1,h1 {
   font-size: 32px;
-  font-weight: bolder;
+  font-weight: 600;
+  font-family: "Roboto Slab";
 }
 
 .h2,h2 {
-  font-size: 32px
+  font-size: 32px;
+  font-family: "Roboto Slab";
 }
 
 .h3,h3 {
@@ -4338,8 +4350,12 @@ a.badge:focus,a.badge:hover {
   }
 
   .jumbotron .h1,.jumbotron h1 {
-      font-size: 55px
+      font-size: 62px
   }
+
+  .jumbotron .h2,.jumbotron h2 {
+    font-size: 40px
+}
 }
 
 .thumbnail {
