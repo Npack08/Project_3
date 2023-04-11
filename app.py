@@ -1,11 +1,20 @@
-import pandas as pd
-import sqlite3
+from flask import Flask, render_template
+# import pandas as pd
+# import sqlite3
 
-# Read sqlite query results into a pandas DataFrame
-conn = sqlite3.connect("heart.db")
-df = pd.read_sql_query("SELECT * FROM heart_db", conn)
 
-# Verify that result of SQL query is stored in the dataframe
-print(df)
+app = Flask(__name__)
 
-conn.close()
+# # Read sqlite query results into a pandas DataFrame
+# conn = sqlite3.connect("heart.db")
+# df = pd.read_sql_query("SELECT * FROM heart_db", conn)
+
+# # Close connection
+# conn.close()
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
