@@ -4312,6 +4312,7 @@ a.badge:focus,a.badge:hover {
   color: inherit;
   background-color: #084b72;
   color: #fff;
+  box-shadow: 7px 5px 5px #3683af;
 }
 
 .jumbotron .h1,.jumbotron h1 {
@@ -4350,11 +4351,13 @@ a.badge:focus,a.badge:hover {
   }
 
   .jumbotron .h1,.jumbotron h1 {
-      font-size: 55px
+      font-size: 55px;
+      letter-spacing: 3px;
   }
 
   .jumbotron .h2,.jumbotron h2 {
-    font-size: 38px
+    font-size: 38px;
+    letter-spacing: 1.25px;
 }
 }
 
