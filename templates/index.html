@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Heart Failure Prediction by 11 Clinical Features</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 jumbotron text-center">
+        <h1>Heart Failure Prediction</h1>
+        <h2>by 11 Clinical Features</h2><br>
+        <p><em>Use the interactive charts below to explore the dataset</em></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <div class="well">
+          <h5 class="well-text">Patient No.:</h5>
+          <select id="selDataset" onchange="optionChanged(this.value);"></select>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Patient Info</h3>
+          </div>
+          <div id="sample-metadata" class="panel-body"></div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div id="plot1"></div>
+      </div>
+      <div class="col-md-5">
+        <div id="plot2"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="plot3"></div>
+      </div>
+    </div>
+    <div class="center">
+      &lsquo;Heart Failure Prediction Dataset&rsquo; retrieved from 
+      <a href="https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction" target="_blank" rel="noopener noreferrer">Kaggle dataset</a> 
+      created by fedesoriano (September 2021)
+    </div>
+  </div>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="./static/js/app.js"></script>
+  
+</body>
+
+</html>
