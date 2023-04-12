@@ -4340,8 +4340,8 @@ a.badge:focus,a.badge:hover {
 
 @media screen and (min-width: 768px) {
   .jumbotron {
-      padding-top:18px;
-      padding-bottom: 25px
+      padding-top:10px;
+      padding-bottom: 15px
   }
 
   .container .jumbotron,.container-fluid .jumbotron {
@@ -4350,11 +4350,11 @@ a.badge:focus,a.badge:hover {
   }
 
   .jumbotron .h1,.jumbotron h1 {
-      font-size: 62px
+      font-size: 55px
   }
 
   .jumbotron .h2,.jumbotron h2 {
-    font-size: 40px
+    font-size: 38px
 }
 }
 
