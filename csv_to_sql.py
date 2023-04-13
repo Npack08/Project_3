@@ -1,11 +1,11 @@
 import csv
 import sqlite3
 
-conn = sqlite3.connect('heart.db')
+conn = sqlite3.connect('resources/heart_db.db')
 cursor = conn.cursor()
 
 create_table = '''
-CREATE TABLE heart_db(
+CREATE TABLE results (
     age INTEGER,
     sex TEXT,
     chestPainType TEXT,
@@ -15,21 +15,22 @@ CREATE TABLE heart_db(
     restingECG TEXT,
     maxHR INTEGER,
     exerciseAngina TEXT,
-    oldpeak REAL,
-    st_slope TEXT,
-    heartDisease INTEGER
+    oldPeak REAL,
+    stSlope TEXT,
+    heartDisease INTEGER,
+    ageGroup TEXT
 );
 '''
 
 cursor.execute(create_table)
 
-file = open("heart.csv")
+file = open("resources/heart.csv")
 
 contents = csv.reader(file)
 next(contents, None)
 
 insert_records = """
-INSERT INTO heart_db (
+INSERT INTO results (
     age,
     sex,
     chestPainType,
@@ -39,11 +40,12 @@ INSERT INTO heart_db (
     restingECG,
     maxHR,
     exerciseAngina,
-    oldpeak,
-    st_slope,
-    heartDisease
+    oldPeak,
+    stSlope,
+    heartDisease,
+    ageGroup
 )
-VALUES (?,?,?,?,?,?,?,?,?,?,?,?);
+VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);
 """
 
 cursor.executemany(insert_records, contents)
