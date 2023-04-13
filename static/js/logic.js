@@ -5,16 +5,16 @@ d3.json(url).then(function(data) {
   console.log(data);
 
   // Group data by ageGroup
-  const groupedData = d3.group(data, d => d.ageGroup);
+  const GROUPED_DATA = d3.group(data, d => d.ageGroup);
 
   // Loop through the grouped data and create plot3 traces for each ageGroup
-  const traces_plot3 = Array.from(groupedData, ([ageGroup, groupData]) => {
-    const restingECG = groupData.map(obj => obj.restingECG);
-    const maxHR = groupData.map(obj => obj.maxHR);
+  const TRACES_PLOT3 = Array.from(GROUPED_DATA, ([ageGroup, groupData]) => {
+    const RESTING_ECG = groupData.map(obj => obj.restingECG);
+    const MAX_HR = groupData.map(obj => obj.maxHR);
 
     return {
-      x: restingECG,
-      y: maxHR,
+      x: RESTING_ECG,
+      y: MAX_HR,
       mode: 'markers',
       type: 'bar',
       name: ageGroup
@@ -22,7 +22,7 @@ d3.json(url).then(function(data) {
   });
 
   // Create plot3 layout object
-  const layout_plot3 = {
+  const LAYOUT_PLOT3 = {
     title: 'Resting ECG vs Max Heart Rate',
     xaxis: {
       title: 'Resting ECG'
@@ -39,5 +39,5 @@ d3.json(url).then(function(data) {
   };
 
   // Create plot on plot3 div
-  Plotly.newPlot('plot3', traces_plot3, layout_plot3);
+  Plotly.newPlot('plot3', TRACES_PLOT3, LAYOUT_PLOT3);
 });
