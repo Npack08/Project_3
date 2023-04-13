@@ -1,22 +1,18 @@
-from flask import Flask, render_template
-# import pandas as pd
-# import sqlite3
-
+from flask import Flask, jsonify
+import json
 
 app = Flask(__name__)
 
-# # Read sqlite query results into a pandas DataFrame
-# conn = sqlite3.connect("resources/heart.db")
-# df = pd.read_sql_query("SELECT * FROM heart_db", conn)
-#
-# # Close connection
-# conn.close()
 
+@app.route('/api/data')
+def api_data():
 
-@app.route('/')
-def index():
+    """Add SQLAlchemy to query sqlite db"""
 
-    return render_template('index.html')
+    file = open('resources/heart_db.json')
+    data = json.load(file)
+
+    return jsonify(data)
 
 
 if __name__ == '__main__':
