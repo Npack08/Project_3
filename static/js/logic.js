@@ -32,7 +32,7 @@ d3.json(URL).then(function(data) {
     },
     legend : {
       title: {
-        text: "   Age groups"
+        text: '   Age groups'
       }
     },
     barmode: 'group'
