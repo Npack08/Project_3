@@ -5,7 +5,7 @@ conn = sqlite3.connect('resources/heart_db.db')
 cursor = conn.cursor()
 
 create_table = '''
-CREATE TABLE results (
+CREATE TABLE heart_data (
     age INTEGER,
     sex TEXT,
     chestPainType TEXT,
@@ -30,7 +30,7 @@ contents = csv.reader(file)
 next(contents, None)
 
 insert_records = """
-INSERT INTO results (
+INSERT INTO heart_data (
     age,
     sex,
     chestPainType,
