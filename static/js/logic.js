@@ -1,12 +1,22 @@
 const URL = 'http://127.0.0.1:5000/api/data';
 
+var GROUPED_DATA;
+
 // Fetch the JSON data and console log it
 d3.json(URL).then(function(data) {
-  console.log(data);
+  // invoke function for first graph with sorted data
+  groupType(data.sort((a, b) => d3.ascending(a.ageGroup, b.ageGroup)));
 
+});
+
+
+///////////////////////////////////////////////
+//       Resting ECG vs Max Heart Rate       //
+///////////////////////////////////////////////
+function groupType(data) {
   // Group data by ageGroup
-  const GROUPED_DATA = d3.group(data, d => d.ageGroup);
-
+  GROUPED_DATA = d3.group(data, d => d.ageGroup);
+  
   // Loop through the grouped data and create plot3 traces for each ageGroup
   const TRACES_PLOT3 = Array.from(GROUPED_DATA, ([ageGroup, groupData]) => {
     const RESTING_ECG = groupData.map(obj => obj.restingECG);
@@ -40,4 +50,4 @@ d3.json(URL).then(function(data) {
 
   // Create plot on plot3 div
   Plotly.newPlot('plot3', TRACES_PLOT3, LAYOUT_PLOT3);
-});
+};
