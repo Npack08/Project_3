@@ -1,5 +1,4 @@
-import json
-from flask import Flask
+from flask import Flask,jsonify
 import sqlalchemy as db
 
 
@@ -19,7 +18,7 @@ def api_data():
     results = conn.execute(query)
     data = results.fetchall()
 
-    return json.dumps([dict(row) for row in data])
+    return jsonify([dict(row) for row in data])
 
 
 if __name__ == '__main__':
