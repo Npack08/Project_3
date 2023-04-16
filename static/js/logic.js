@@ -1,11 +1,15 @@
 const URL = 'http://127.0.0.1:5000/api/data';
 
-var GROUPED_DATA;
+var AGE_SORT;
 
 // Fetch the JSON data and console log it
 d3.json(URL).then(function(data) {
+
+  AGE_SORT = data.sort((a, b) => d3.ascending(a.ageGroup, b.ageGroup))
+
   // invoke function for first graph with sorted data
-  groupType(data.sort((a, b) => d3.ascending(a.ageGroup, b.ageGroup)));
+  restingECG();
+  avgCholestrol();
 
 });
 
@@ -13,9 +17,9 @@ d3.json(URL).then(function(data) {
 ///////////////////////////////////////////////
 //       Resting ECG vs Max Heart Rate       //
 ///////////////////////////////////////////////
-function groupType(data) {
+function restingECG() {
   // Group data by ageGroup
-  GROUPED_DATA = d3.group(data, d => d.ageGroup);
+  const GROUPED_DATA = d3.group(AGE_SORT, d => d.ageGroup);
   
   // Loop through the grouped data and create plot3 traces for each ageGroup
   const TRACES_PLOT3 = Array.from(GROUPED_DATA, ([ageGroup, groupData]) => {
@@ -50,4 +54,26 @@ function groupType(data) {
 
   // Create plot on plot3 div
   Plotly.newPlot('plot3', TRACES_PLOT3, LAYOUT_PLOT3);
+};
+
+//////////////////////////////////////////////
+//     Average Cholesterol vs Age Group     //
+//////////////////////////////////////////////
+function avgCholestrol() {
+
+  let cholData = Array.from(d3.rollup(AGE_SORT, 
+    v => d3.mean(v, d => d.cholesterol), d => d.ageGroup));
+    
+  let xValues = cholData.map(d => d[0]);
+  let yValues = cholData.map(d => Number((d[1]).toFixed(2)));
+
+  let trace1 = {
+    x: xValues,
+    y: yValues,
+    mode: 'markers',
+    type: 'bar',
+    name: yValues
+  };
+
+  Plotly.newPlot('plot2', [trace1]);
 };
