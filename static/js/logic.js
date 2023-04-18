@@ -61,7 +61,7 @@ d3.json(ALL_SEX_CHOL_URL).then(function(data) {
     barmode: 'group'
   };
 
-  Plotly.newPlot('plot2', [trace1]);
+  Plotly.newPlot('plot2', [trace1], layout1);
 
 });
 
