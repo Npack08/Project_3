@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 import pandas as pd
+import numpy as np
 import sqlite3
 
 
@@ -21,35 +22,74 @@ def api_data():
 @app.route('/api/male_cholesterol')
 def male_chol_data():
 
-    df = heart_data
-    male_df = df.loc[df['sex'] == "M"].groupby('ageGroup').mean().round(2)
-    df_dict = male_df.to_dict('index')
+    table = heart_data[heart_data.sex == 'M'].pivot_table(
+        values=['cholesterol'],
+        index=['ageGroup'],
+        columns=['heartDisease'],
+        aggfunc=np.mean,
+        fill_value=0
+    ).round(2)
 
-    return jsonify(df_dict)
+    df_dict = table.to_dict('index')
+    list_dicts = []
+    for key, value in df_dict.items():
+        for key2, value2 in value.items():
+            if key2[1] == 0:
+                hd = "No"
+            else:
+                hd = "Yes"
+            list_dicts.append({"ageGroup": key, key2[0]: value2, "heartDisease": hd})
+
+    return jsonify(list_dicts)
 
 
 @app.route('/api/female_cholesterol')
 def female_chol_data():
 
-    df = heart_data
-    female_df = df.loc[df['sex'] == "F"].groupby('ageGroup').mean().round(2)
-    df_dict = female_df.to_dict('index')
+    table = heart_data[heart_data.sex == 'F'].pivot_table(
+        values=['cholesterol'],
+        index=['ageGroup'],
+        columns=['heartDisease'],
+        aggfunc=np.mean,
+        fill_value=0
+    ).round(2)
 
-    return jsonify(df_dict)
+    df_dict = table.to_dict('index')
+    list_dicts = []
+    for key, value in df_dict.items():
+        for key2, value2 in value.items():
+            if key2[1] == 0:
+                hd = "No"
+            else:
+                hd = "Yes"
+            list_dicts.append({"ageGroup": key, key2[0]: value2, "heartDisease": hd})
+
+    return jsonify(list_dicts)
 
 
 @app.route('/api/all_sex_cholesterol')
 def all_sex_chol_data():
 
-    df = heart_data
-    all_sex_df = df.groupby(['ageGroup', 'sex']).mean().round(2)
-    df_dict = all_sex_df.to_dict('index')
-    new_dict = []
-    for key, value in df_dict.items():
-        value.update({"group": key[0], "gender": key[1]})
-        new_dict.append(value)
+    table = pd.pivot_table(
+        heart_data,
+        values=['cholesterol'],
+        index=['ageGroup'],
+        columns=['heartDisease'],
+        aggfunc=np.mean,
+        fill_value=0
+    ).round(2)
 
-    return jsonify(new_dict)
+    df_dict = table.to_dict('index')
+    list_dicts = []
+    for key, value in df_dict.items():
+        for key2, value2 in value.items():
+            if key2[1] == 0:
+                hd = "No"
+            else:
+                hd = "Yes"
+            list_dicts.append({"ageGroup": key, key2[0]: value2, "heartDisease": hd})
+
+    return jsonify(list_dicts)
 
 
 if __name__ == '__main__':
