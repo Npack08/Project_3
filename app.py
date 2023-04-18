@@ -42,10 +42,14 @@ def female_chol_data():
 def all_sex_chol_data():
 
     df = heart_data
-    all_sex_df = df.groupby('ageGroup').mean().round(2)
+    all_sex_df = df.groupby(['ageGroup', 'sex']).mean().round(2)
     df_dict = all_sex_df.to_dict('index')
+    new_dict = []
+    for key, value in df_dict.items():
+        value.update({"group": key[0], "gender": key[1]})
+        new_dict.append(value)
 
-    return jsonify(df_dict)
+    return jsonify(new_dict)
 
 
 if __name__ == '__main__':
