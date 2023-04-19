@@ -8,7 +8,37 @@ d3.json(URL).then(function(data) {
   groupType(data.sort((a, b) => d3.ascending(a.ageGroup, b.ageGroup)));
 
 });
+const groupedData = d3.group(data, d => d.chestPainType);
 
+//Loop through the grouped data and create a plot trace
+const TRACES = Array.from(groupedData, ([chestPainType, groupedData]) => {
+  const CHOLESTEROL = d3.mean(groupedData, d => d.cholesterol);
+
+  return{
+    x: [chestPainType],
+    y: [CHOLESTEROL],
+    type: 'bar',
+    name: chestPainType
+  };
+});
+// Create the plot layout object
+const LAYOUT = {
+  title: 'Average cholesterol rates by chest pain',
+  xaxis: {
+    title: 'Chest Pain Types'
+  },
+  yaxis: {
+    title: 'Average Cholesterol Rate'
+  },
+  legend: {
+    title: {
+      text: 'Chest Pain Types'
+    }
+  },
+  barmode: 'group'
+};
+
+Plotly.newPlot('plot', TRACES,LAYOUT)
 
 ///////////////////////////////////////////////
 //       Resting ECG vs Max Heart Rate       //
