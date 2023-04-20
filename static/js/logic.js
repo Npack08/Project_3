@@ -46,6 +46,7 @@ d3.json(FEMALE_CHOL_URL).then(function(data) {
 //         Chest Pain vs Cholesterol        //
 //////////////////////////////////////////////
 function chestPain(data) {
+
   let GROUPED_DATA = d3.group(data, d => d.chestPainType);
   
   //Loop through the grouped data and create a plot trace
