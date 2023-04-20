@@ -17,11 +17,14 @@ This dataset was created by combining different datasets already available indep
 - Stalog (Heart) Data Set: 270 observations
 
 Total: 1190 observations
+<br>
 Duplicated: 272 observations
+<br>
 Final Data: 918 observations
 
 Every dataset used can be found under the Index of heart disease datasets from UCI Machine Learning Repository on the following link: https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/
-fedesoriano. (September 2021). Heart Failure Prediction Dataset. Retrieved [Date Retrieved] from https://www.kaggle.com/fedesoriano/heart-failure-prediction
+<br>
+fedesoriano. (September 2021). Heart Failure Prediction Dataset. Retrieved 04/10/2023 from https://www.kaggle.com/fedesoriano/heart-failure-prediction
 
 <br />
 
