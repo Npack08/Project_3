@@ -15,6 +15,7 @@ d3.json(ALL_DATA_URL).then(function(data) {
 
   // invoke function for first graph with sorted data
   restingECG();
+  chestPain(data);
 
 });
 
@@ -41,47 +42,42 @@ d3.json(FEMALE_CHOL_URL).then(function(data) {
 
 });
 
-
-///////////////////////////////////////////////
-//       Resting ECG vs Max Heart Rate       //
-///////////////////////////////////////////////
-function restingECG() {
-  // Group data by ageGroup
-  const GROUPED_DATA = d3.group(AGE_SORT, d => d.ageGroup);
+//////////////////////////////////////////////
+//         Chest Pain vs Cholesterol        //
+//////////////////////////////////////////////
+function chestPain(data) {
+  let GROUPED_DATA = d3.group(data, d => d.chestPainType);
   
-  // Loop through the grouped data and create plot3 traces for each ageGroup
-  const TRACES_PLOT3 = Array.from(GROUPED_DATA, ([ageGroup, groupData]) => {
-    const RESTING_ECG = groupData.map(obj => obj.restingECG);
-    const MAX_HR = groupData.map(obj => obj.maxHR);
+  //Loop through the grouped data and create a plot trace
+  const TRACES = Array.from(GROUPED_DATA, ([chestPainType, groupedData]) => {
+    const CHOLESTEROL = d3.mean(groupedData, d => d.cholesterol);
 
-    return {
-      x: RESTING_ECG,
-      y: MAX_HR,
-      mode: 'markers',
+    return{
+      x: [chestPainType],
+      y: [CHOLESTEROL],
       type: 'bar',
-      name: ageGroup
+      name: chestPainType
     };
   });
 
-  // Create plot3 layout object
-  const LAYOUT_PLOT3 = {
-    title: 'Resting ECG vs Max Heart Rate',
+  // Create the plot layout object
+  const LAYOUT = {
+    title: 'Average cholesterol rates by chest pain',
     xaxis: {
-      title: 'Resting ECG'
+      title: 'Chest Pain Types'
     },
     yaxis: {
-      title: 'Max Heart Rate'
+      title: 'Average Cholesterol Rate'
     },
-    legend : {
+    legend: {
       title: {
-        text: '   Age Groups'
+        text: 'Chest Pain Types'
       }
     },
     barmode: 'group'
   };
 
-  // Create plot on plot3 div
-  Plotly.newPlot('plot3', TRACES_PLOT3, LAYOUT_PLOT3);
+  Plotly.newPlot('plot1', TRACES, LAYOUT);
 };
 
 //////////////////////////////////////////////
@@ -140,4 +136,46 @@ function updateAvgCholesterol() {
 
   // Create plot on plot3 div
   Plotly.newPlot('plot2', TRACES_PLOT2, LAYOUT_PLOT2);
+};
+
+///////////////////////////////////////////////
+//       Resting ECG vs Max Heart Rate       //
+///////////////////////////////////////////////
+function restingECG() {
+  // Group data by ageGroup
+  const GROUPED_DATA = d3.group(AGE_SORT, d => d.ageGroup);
+  
+  // Loop through the grouped data and create plot3 traces for each ageGroup
+  const TRACES_PLOT3 = Array.from(GROUPED_DATA, ([ageGroup, groupData]) => {
+    const RESTING_ECG = groupData.map(obj => obj.restingECG);
+    const MAX_HR = groupData.map(obj => obj.maxHR);
+
+    return {
+      x: RESTING_ECG,
+      y: MAX_HR,
+      mode: 'markers',
+      type: 'bar',
+      name: ageGroup
+    };
+  });
+
+  // Create plot3 layout object
+  const LAYOUT_PLOT3 = {
+    title: 'Resting ECG vs Max Heart Rate',
+    xaxis: {
+      title: 'Resting ECG'
+    },
+    yaxis: {
+      title: 'Max Heart Rate'
+    },
+    legend : {
+      title: {
+        text: '   Age Groups'
+      }
+    },
+    barmode: 'group'
+  };
+
+  // Create plot on plot3 div
+  Plotly.newPlot('plot3', TRACES_PLOT3, LAYOUT_PLOT3);
 };
