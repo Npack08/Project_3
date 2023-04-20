@@ -63,12 +63,12 @@ function chestPain(data) {
 
   // Create the plot layout object
   const LAYOUT = {
-    title: 'Average cholesterol rates by chest pain',
+    title: 'Average Cholesterol vs Chest Pain',
     xaxis: {
       title: 'Chest Pain Types'
     },
     yaxis: {
-      title: 'Average Cholesterol Rate'
+      title: 'Average Cholesterol'
     },
     legend: {
       title: {
