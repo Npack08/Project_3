@@ -45,6 +45,14 @@ select {
   height: 450px;
 }
 
+.info-row2 {
+  width: 23.75% !important
+}
+
+.no-left-padding {
+  padding-left: 0px !important;
+}
+
 article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary {
   display: block
 }
