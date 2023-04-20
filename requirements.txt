@@ -1,5 +1,5 @@
 Flask==2.2.2
-numpy==1.23.5
+numpy
 pandas==1.5.3
 waitress
 gunicorn
