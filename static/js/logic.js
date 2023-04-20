@@ -1,13 +1,52 @@
-const URL = 'http://127.0.0.1:5000/api/data';
+const ALL_DATA_URL = 'http://127.0.0.1:5000/api/data';
+const MALE_CHOL_URL = 'http://127.0.0.1:5000//api/male_cholesterol';
+const FEMALE_CHOL_URL = 'http://127.0.0.1:5000//api/female_cholesterol';
+const ALL_SEX_CHOL_URL = 'http://127.0.0.1:5000//api/all_sex_cholesterol';
 
-// Fetch the JSON data and console log it
-d3.json(URL).then(function(data) {
+var AGE_SORT;
+var MALE_CHOL;
+var FEMALE_CHOL;
+var ALL_SEX_CHOL;
+
+// Fetch the JSON data
+d3.json(ALL_DATA_URL).then(function(data) {
+
+  AGE_SORT = data.sort((a, b) => d3.ascending(a.ageGroup, b.ageGroup))
+
   // invoke function for first graph with sorted data
-  groupType(data.sort((a, b) => d3.ascending(a.ageGroup, b.ageGroup)));
-  plot2Group(data);
+  restingECG();
+  chestPain(data);
+
 });
 
-function plot2Group(data) {
+// Fetch the JSON data
+d3.json(ALL_SEX_CHOL_URL).then(function(data) {
+
+  ALL_SEX_CHOL = d3.group(data, d => d.heartDisease);
+
+  updateAvgCholesterol();
+
+});
+
+// Fetch the JSON data
+d3.json(MALE_CHOL_URL).then(function(data) {
+
+  MALE_CHOL = d3.group(data, d => d.heartDisease);
+
+});
+
+// Fetch the JSON data
+d3.json(FEMALE_CHOL_URL).then(function(data) {
+
+  FEMALE_CHOL = d3.group(data, d => d.heartDisease);
+
+});
+
+//////////////////////////////////////////////
+//         Chest Pain vs Cholesterol        //
+//////////////////////////////////////////////
+function chestPain(data) {
+
   let GROUPED_DATA = d3.group(data, d => d.chestPainType);
   
   //Loop through the grouped data and create a plot trace
@@ -21,6 +60,7 @@ function plot2Group(data) {
       name: chestPainType
     };
   });
+
   // Create the plot layout object
   const LAYOUT = {
     title: 'Average cholesterol rates by chest pain',
@@ -39,15 +79,72 @@ function plot2Group(data) {
   };
 
   Plotly.newPlot('plot1', TRACES, LAYOUT);
-}
+};
 
+//////////////////////////////////////////////
+//     Average Cholesterol vs Age Group     //
+//////////////////////////////////////////////
+d3.selectAll("#selDataset").on("change", updateAvgCholesterol);
+
+function updateAvgCholesterol() {
+
+  let dropdownMenu = d3.select("#selDataset");
+  let dataset = dropdownMenu.property("value");
+  let group_data;
+
+  if (dataset == 'All Sexes') {
+    group_data = ALL_SEX_CHOL;
+  }
+
+  else if (dataset == 'Male') {
+    group_data = MALE_CHOL;
+  }
+
+  else if (dataset == 'Female') {
+    group_data = FEMALE_CHOL;
+  };
+
+  // Loop through the grouped data and create plot3 traces for each ageGroup
+  const TRACES_PLOT2 = Array.from(group_data, ([heartDisease, groupData]) => {
+    const RESTING_ECG = groupData.map(obj => obj.ageGroup);
+    const MAX_HR = groupData.map(obj => obj.cholesterol);
+
+    return {
+      x: RESTING_ECG,
+      y: MAX_HR,
+      mode: 'markers',
+      type: 'bar',
+      name: heartDisease
+    };
+  });
+
+  // Create plot3 layout object
+  const LAYOUT_PLOT2 = {
+    title: 'Age Group vs Average Cholesterol',
+    xaxis: {
+      title: 'Age Group'
+    },
+    yaxis: {
+      title: 'Average Cholesterol'
+    },
+    legend : {
+      title: {
+        text: 'Heart Disease'
+      }
+    },
+    barmode: 'group'
+  };
+
+  // Create plot on plot3 div
+  Plotly.newPlot('plot2', TRACES_PLOT2, LAYOUT_PLOT2);
+};
 
 ///////////////////////////////////////////////
 //       Resting ECG vs Max Heart Rate       //
 ///////////////////////////////////////////////
-function groupType(data) {
+function restingECG() {
   // Group data by ageGroup
-  let GROUPED_DATA = d3.group(data, d => d.ageGroup);
+  const GROUPED_DATA = d3.group(AGE_SORT, d => d.ageGroup);
   
   // Loop through the grouped data and create plot3 traces for each ageGroup
   const TRACES_PLOT3 = Array.from(GROUPED_DATA, ([ageGroup, groupData]) => {
@@ -74,7 +171,7 @@ function groupType(data) {
     },
     legend : {
       title: {
-        text: '   Age groups'
+        text: '   Age Groups'
       }
     },
     barmode: 'group'
