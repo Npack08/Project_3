@@ -1,4 +1,4 @@
-# <a href="https://justinepile.github.io/Project3_clone/templates/">Heart Failure Prediction by Clinical Features</a>
+# <a href="https://justinepile.github.io/Project3_clone/templates/" target="_blank">Heart Failure Prediction by Clinical Features</a>
 
 UCI Data Analytics Bootcamp | Project 3
 
