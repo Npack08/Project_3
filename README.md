@@ -1,4 +1,4 @@
-# Heart Failure Prediction by Clinical Features
+# <a href="https://justinepile.github.io/Project3_clone/templates/">Heart Failure Prediction by Clinical Features</a>
 
 UCI Data Analytics Bootcamp | Project 3
 
